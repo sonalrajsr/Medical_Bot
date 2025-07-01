@@ -2,6 +2,7 @@ from Utility.get_data_from_pinecone import get_result_pinecone
 from Utility.pdf_chunk import split_text
 from Utility.pdf_loader import load_pdf
 from Utility.pinecone_vector_db import store_vector_db
+from Utility.LLM import get_llm_response
 import streamlit as st
 
 st.set_page_config(page_title="Medical Chat Bot", page_icon=":robot_face:", layout="wide")
@@ -23,7 +24,8 @@ def main():
     if query:
         with st.spinner("Searching for relevant information..."):
             result = get_result_pinecone(query)
-            st.write(result)
+            LLM_response = get_llm_response(query, result)
+            st.write(LLM_response)
 
 if __name__ == "__main__":
     main()
